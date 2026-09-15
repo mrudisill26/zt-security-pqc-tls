@@ -1,89 +1,90 @@
-# [Project Title]
+# Post-Quantum TLS on RHEL 10: Deploy, Break, and Fix a Quantum-Safe Web Server
 
 <!-- This file is the design document for your lab or demo. -->
-<!-- Fill in each section below, or run /rhdp-publishing-house to have the intake skill help. -->
-<!-- Sections marked with [brackets] are placeholders — replace with real content. -->
-<!-- The validation gate checks for all required sections before submission. -->
 
 ## Overview
 
-[2-3 sentences on what this lab or demo is and why it exists. Then a direct description of what participants will do — specific enough that someone reading this section immediately understands the content without interpretation. No flowery language. Example: "Participants will deploy a 3-tier application on OpenShift, configure autoscaling, and troubleshoot a simulated pod failure."]
+This hands-on lab teaches how to protect web traffic against "Harvest Now, Decrypt Later" (HNDL) attacks using the post-quantum cryptography built into Red Hat Enterprise Linux 10. It is Part 2 of a three-part RH1 lab series and is the longest of the three (~35 minutes). Adversaries record encrypted traffic today so they can decrypt it once a cryptographically relevant quantum computer exists; hybrid post-quantum key exchange defends against that threat now.
+
+Participants deploy an Nginx web server with classical TLS 1.3 on a RHEL 10 server, connect to it from a separate RHEL 10 client, upgrade the server to hybrid ML-KEM-768 + X25519 key exchange, then deliberately reproduce two real production failure modes — network MTU fragmentation of the larger PQC handshake and handshake failures from legacy clients — and apply the engineering fixes, including a hybrid fallback configuration.
 
 ## Target Audience
 
-- **Role:** [Data scientists, platform engineers, developers, etc.]
-- **Experience level:** [Beginner, intermediate, or advanced]
-- **What they already know:** [Existing skills and knowledge]
-- **What they don't know:** [Skills this lab teaches]
+- **Role:** Linux users, administrators, and security-curious practitioners attending the RH1 lab series
+- **Experience level:** Beginner — new to Linux; every command is provided and explained
+- **What they already know:** Basic comfort following guided, step-by-step instructions; foundational concepts introduced in Part 1 of the series
+- **What they don't know:** How TLS key exchange works, what post-quantum cryptography is, how to configure a web server, and why larger PQC handshakes break on real networks
 
 ## Prerequisites
 
-- [What the learner must know or have completed before starting]
-- [Can the lab validate these automatically? Yes/No — brief explanation]
-
-<!-- If no prerequisites, write "None" -->
+- None required to begin — the lab is fully guided and self-contained. Part 1 of the series provides helpful context but is not mandatory.
+- Can the lab validate these automatically? No — there are no entry prerequisites to check. Progress within the lab is validated automatically at each module via solve/validate checkpoints.
 
 ## Learning Objectives
 
-1. [Action verb] [specific, measurable outcome]
-2. [Action verb] [specific, measurable outcome]
-3. [Action verb] [specific, measurable outcome]
-
-<!-- Scale to duration: up to 3 objectives per 45 min of content. Start with action verbs: Configure, Deploy, Create, Implement, Troubleshoot, Monitor, Scale. Each should be testable. NOT: Understand, Learn, Know. -->
+1. Deploy an Nginx web server with classical TLS 1.3 (ECDSA P-256) on RHEL 10
+2. Configure hybrid ML-KEM-768 + X25519 post-quantum key exchange in Nginx
+3. Troubleshoot PQC-induced network failures — MTU fragmentation and legacy-client handshake errors
+4. Implement a hybrid fallback configuration that preserves backward compatibility
 
 ## Content Type
 
-[Lab (hands-on) or Demo (presenter-led)]
+Lab (hands-on)
 
 ## Products & Technologies
 
-- [Official Red Hat product name with version if relevant]
-- [Additional products/technologies]
+- Red Hat Enterprise Linux 10
 
-<!-- Use official names: "Red Hat OpenShift", not "OpenShift". List upstream projects separately. -->
+<!-- Upstream projects / tools used in the lab, listed separately from Red Hat products: -->
+- Nginx (upstream web server)
+- OpenSSL 3.x (upstream TLS toolkit)
 
 ## Module Map
 
 | Module | Title | Duration |
 |--------|-------|----------|
-| 1 | [Module title] | [XX min] |
-| 2 | [Module title] | [XX min] |
-| — | **Total hands-on** | **[X hours]** |
-| — | Intro / presentation | [~XX min] |
-| — | **Total lab** | **[~X hours]** |
+| 1 | Fundamentals & the PQC Threat Model | 5 min |
+| 2 | Deploy a Classical TLS Web Server | 8 min |
+| 3 | Upgrade to Post-Quantum TLS | 10 min |
+| 4 | Troubleshoot PQC Breaking Points & Fallback | 12 min |
+| — | **Total hands-on** | **~35 min** |
+| — | Intro / orientation | ~5 min |
+| — | **Total lab** | **~40 min** |
 
-<!-- Each module 10-30 min. Total: lab 1-4 hours, demo 15-45 min. Modules should build on each other. -->
+<!-- Modules build on each other: theory → working baseline → PQC upgrade → break and fix. -->
 
 ## Difficulty Level
 
-[Beginner, Intermediate, or Advanced]
+Beginner
 
 ## Environment
 
-**Learner view:** [What exists when the lab starts — pre-deployed resources, what participants see and interact with. Be specific about cluster details.]
+**Learner view:** When the lab starts, two pre-provisioned RHEL 10 machines are ready and reachable — a **server** VM (where the learner installs and configures the Nginx web server) and a **client** VM (used to connect to the server, inspect TLS handshakes with OpenSSL/curl, and simulate a legacy client). The learner interacts through the guided zero-touch Showroom interface with terminal access to both machines. All commands are provided as copy-paste blocks with plain-language explanations. The two-machine layout is required so that the network path between client and server is real — that is what makes the MTU fragmentation failure in Module 4 reproducible.
 
-**Automation needed:** [Yes/No]
+**Automation needed:** Yes
 
-[If yes, list what automation must provision — operators, per-user resources, sample apps, data sets.]
+- Provision two RHEL 10 VMs per student (server + client) with network connectivity between them.
+- Ensure the `nginx` and `openssl` packages are installable (repositories reachable or pre-staged).
+- Provide per-module solve/validate automation for the zero-touch checkpoints.
 
 ## Infrastructure Requirements
 
-- **Cloud provider:** [CNV (default), AWS, or Troshka (bare-metal/nested virt)]
-- **Cluster type:** [Multinode or SNO (Single Node OpenShift)]
-- **OCP version:** [e.g. 4.20 — minimum 4.20]
-- **Topology:** [Shared cluster, per-student, or CNV pool]
-- **Sizing:** [Node types and counts with resources — e.g., "3 control plane (16 CPU, 64GB RAM), 6 workers (8 CPU, 32GB RAM, 100GB disk)"]
-- **Automation approach:** [Ansible, GitOps (Helm + ArgoCD), or combo]
-- **AI/MaaS:** [None, MaaS (open-source model), MaaS (frontier model), or dedicated GPU — include justification if not "none"]
-- **External services:** [Named services — e.g., github.com, registry.access.redhat.com — or "None"]
-- **AAP version:** [e.g. 2.5 — only if AAP is in products; omit otherwise]
-- **Non-GA products:** [Product name + version, with access plan — or "None (all products are GA)"]
-
-<!-- Not all fields must be known at intake. "TBD, estimating ~X" is fine. -->
+- **Cloud provider:** TBD — confirmed in infrastructure phase
+- **Cluster type:** TBD — confirmed in infrastructure phase
+- **OCP version:** TBD — confirmed in infrastructure phase
+- **Topology:** TBD — confirmed in infrastructure phase
+- **Sizing:** TBD — confirmed in infrastructure phase
+- **Automation approach:** TBD — confirmed in infrastructure phase
+- **AI/MaaS:** TBD — confirmed in infrastructure phase
+- **External services:** TBD — confirmed in infrastructure phase
+- **AAP version:** TBD — confirmed in infrastructure phase
+- **Non-GA products:** TBD — confirmed in infrastructure phase
 
 ## Assessment Strategy (Optional)
 
-<!-- Optional — skip this section for demos or classic labs without verification. -->
-<!-- Relevant for Zero-Touch labs with solve/validate buttons or labs with automated checks. -->
+This is a zero-touch lab, so each module ends with an automated solve/validate checkpoint:
 
-[If applicable: how will we know the learner successfully completed each module? Per module: verification script, solve/validate button, visible result in the UI, or automated check.]
+- **Module 1:** Knowledge check — no system state to validate (trust-based / short quiz).
+- **Module 2:** Validate that Nginx is serving classical TLS 1.3 on port 8443 (a request from the client returns the expected 200 response).
+- **Module 3:** Validate that the server negotiates the hybrid `mlkem768_x25519` group (handshake from the client reports the PQC temp key).
+- **Module 4:** Validate that PMTUD/MSS fixes allow the large PQC handshake to complete, and that the hybrid fallback lets a legacy X25519-only client connect successfully.
