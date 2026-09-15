@@ -16,8 +16,8 @@ project:
   automation_type: "ansible"
   description: "Join this hands-on workshop on RHEL 10 to learn how to defend against \"Harvest Now, Decrypt Later\" attacks. You'll set up a live web server, enable hybrid ML-KEM Post-Quantum Cryptography (PQC), break the network on purpose to test MTU limits and legacy client fallback, and apply the engineering fixes needed for production resilience."
   # content_reviewer_email and infra_reviewer_email are assigned by the RHDP team — not set by the author
-  jira_ticket: ""
-  workflow_id: ""
+  jira_ticket: "RHDPCD-1637"
+  workflow_id: "75530c34-f356-4dec-ad44-c86dde0dde43"
 
 spec:
   title: ""
