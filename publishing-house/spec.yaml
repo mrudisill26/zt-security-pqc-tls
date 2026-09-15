@@ -101,11 +101,26 @@ approval_checklist:
   content:
     prerequisites_verifiable: false
     assessment_strategy: ""
-    catalog_gap: ""
+    catalog_gap: "The RHDP catalog covers classical RHEL system-wide cryptographic policy tuning (FUTURE policy, RSA/ECDSA certificates, Apache HTTPD) but no post-quantum content. This design is the only catalog item covering hybrid ML-KEM-768 + X25519 key exchange, Nginx PQC TLS configuration on RHEL 10, and PQC-specific network troubleshooting (MTU fragmentation and legacy-client fallback)."
     design_overview: ""
     module_summaries: []
-    rcars_overlap_pct: null
-    rcars_top_matches: []
+    rcars_overlap_pct: 37
+    rcars_top_matches:
+    - title: "Configuring the system-wide cryptographic policy"
+      ci_name: "zt-rhelbu.zt-crypto-policy.prod"
+      url: "https://catalog.demo.redhat.com/catalog?item=zt-rhelbu.zt-crypto-policy.prod"
+      relevance_score: 37
+      why_it_fits: "Covers RHEL cryptographic policy management and TLS/SSL configuration (foundational overlap), but focuses on classical crypto policy enforcement (FUTURE policy, RSA certificates, Apache HTTPD) rather than post-quantum ML-KEM-768 hybrid key exchange, Nginx, or MTU troubleshooting."
+    - title: "Customize the system-wide cryptographic policy"
+      ci_name: "zt-rhelbu.zt-customize-crypto-policy.prod"
+      url: "https://catalog.demo.redhat.com/catalog?item=zt-rhelbu.zt-customize-crypto-policy.prod"
+      relevance_score: 33
+      why_it_fits: "Covers RHEL system-wide crypto policy customization via update-crypto-policies (tangential to TLS config), but focuses on classical crypto with Apache HTTPD; does not address RHEL 10, post-quantum algorithms, Nginx, or network-layer troubleshooting."
+    - title: "Identity Management Workshop"
+      ci_name: "zt-rhelbu.zt-idm-workshop.prod"
+      url: "https://catalog.demo.redhat.com/catalog?item=zt-rhelbu.zt-idm-workshop.prod"
+      relevance_score: 26
+      why_it_fits: "RHEL security-adjacent workshop; no overlap with post-quantum cryptography or TLS key exchange topics."
     rejections: []
 
   infra:
