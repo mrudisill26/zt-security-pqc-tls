@@ -69,16 +69,15 @@ Beginner
 
 ## Infrastructure Requirements
 
-- **Cloud provider:** TBD — confirmed in infrastructure phase
-- **Cluster type:** TBD — confirmed in infrastructure phase
-- **OCP version:** TBD — confirmed in infrastructure phase
-- **Topology:** TBD — confirmed in infrastructure phase
-- **Sizing:** TBD — confirmed in infrastructure phase
-- **Automation approach:** TBD — confirmed in infrastructure phase
-- **AI/MaaS:** TBD — confirmed in infrastructure phase
-- **External services:** TBD — confirmed in infrastructure phase
-- **AAP version:** TBD — confirmed in infrastructure phase
-- **Non-GA products:** TBD — confirmed in infrastructure phase
+- **Platform:** RHEL VMs
+- **Cloud provider:** CNV
+- **Topology:** Per-student (each learner gets their own pair of VMs)
+- **Sizing:** 2 RHEL 10 VMs per student — 1 server (2 vCPU, 4GB RAM, 30GB disk) running Nginx + OpenSSL, and 1 client (2 vCPU, 4GB RAM, 30GB disk) for handshake tests and legacy-client simulation. A real network path between the two is required for the Module 4 MTU failure.
+- **Automation approach:** Ansible
+- **AI/MaaS:** None
+- **External services:** Red Hat CDN — `cdn.redhat.com` and `subscription.rhsm.redhat.com` (for installing the `nginx` and `openssl` packages during provisioning). No external services are reached during the student session — all lab traffic stays between the two VMs.
+- **AAP version:** N/A (AAP not used)
+- **Non-GA products:** None — RHEL 10 is GA.
 
 ## Assessment Strategy (Optional)
 
