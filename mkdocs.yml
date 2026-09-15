@@ -1,0 +1,13 @@
+site_name: 'Post-Quantum TLS on RHEL 10: Deploy, Break, and Fix a Quantum-Safe Web
+  Server'
+docs_dir: publishing-house/spec
+nav:
+- Home: index.md
+- Design Spec: design.md
+- Modules:
+  - Module 1 - Pqc Threat Model: modules/module-01-pqc-threat-model.md
+  - Module 2 - Deploy Classical Tls: modules/module-02-deploy-classical-tls.md
+  - Module 3 - Upgrade Pqc Tls: modules/module-03-upgrade-pqc-tls.md
+  - Module 4 - Troubleshoot Pqc Fallback: modules/module-04-troubleshoot-pqc-fallback.md
+plugins:
+- techdocs-core

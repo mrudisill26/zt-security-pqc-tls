@@ -114,7 +114,7 @@ approval_checklist:
 
   content:
     prerequisites_verifiable: false
-    assessment_strategy: ""
+    assessment_strategy: "Zero-touch solve/validate checkpoint per module. Module 1 is a trust-based knowledge check (no system state). Module 2 validates Nginx serving classical TLS 1.3 on port 8443 (client request returns 200). Module 3 validates the server negotiates the hybrid mlkem768_x25519 group (client handshake reports the PQC temp key). Module 4 validates the PMTUD/MSS fix lets the large PQC handshake complete and that the hybrid fallback lets a legacy X25519-only client connect."
     catalog_gap: "The RHDP catalog covers classical RHEL system-wide cryptographic policy tuning (FUTURE policy, RSA/ECDSA certificates, Apache HTTPD) but no post-quantum content. This design is the only catalog item covering hybrid ML-KEM-768 + X25519 key exchange, Nginx PQC TLS configuration on RHEL 10, and PQC-specific network troubleshooting (MTU fragmentation and legacy-client fallback)."
     design_overview: "A beginner (new-to-Linux) zero-touch RHEL 10 lab — Part 2 of a three-part RH1 series — that defends web traffic against 'Harvest Now, Decrypt Later' attacks using post-quantum cryptography. Learners deploy an Nginx web server with classical TLS, upgrade it to hybrid ML-KEM-768 + X25519 key exchange, then deliberately reproduce and fix two production failure modes (MTU fragmentation of the larger PQC handshake and legacy-client handshake failures). Runs on two RHEL 10 VMs (server + client) so the network path is real, with fully guided copy-paste steps and per-module solve/validate checkpoints."
     module_summaries:
