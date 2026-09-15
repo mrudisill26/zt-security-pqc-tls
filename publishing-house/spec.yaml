@@ -102,8 +102,16 @@ approval_checklist:
     prerequisites_verifiable: false
     assessment_strategy: ""
     catalog_gap: "The RHDP catalog covers classical RHEL system-wide cryptographic policy tuning (FUTURE policy, RSA/ECDSA certificates, Apache HTTPD) but no post-quantum content. This design is the only catalog item covering hybrid ML-KEM-768 + X25519 key exchange, Nginx PQC TLS configuration on RHEL 10, and PQC-specific network troubleshooting (MTU fragmentation and legacy-client fallback)."
-    design_overview: ""
-    module_summaries: []
+    design_overview: "A beginner (new-to-Linux) zero-touch RHEL 10 lab — Part 2 of a three-part RH1 series — that defends web traffic against 'Harvest Now, Decrypt Later' attacks using post-quantum cryptography. Learners deploy an Nginx web server with classical TLS, upgrade it to hybrid ML-KEM-768 + X25519 key exchange, then deliberately reproduce and fix two production failure modes (MTU fragmentation of the larger PQC handshake and legacy-client handshake failures). Runs on two RHEL 10 VMs (server + client) so the network path is real, with fully guided copy-paste steps and per-module solve/validate checkpoints."
+    module_summaries:
+    - title: "Fundamentals & the PQC Threat Model"
+      overview: "Conceptual grounding: learners meet the 'Harvest Now, Decrypt Later' threat and learn how hybrid key exchange (classical X25519 + post-quantum ML-KEM-768) defends recorded traffic today. No configuration — sets up the roadmap for the rest of the lab."
+    - title: "Deploy a Classical TLS Web Server"
+      overview: "Learners install Nginx on the RHEL 10 server VM, generate an ECDSA P-256 certificate, serve classical TLS 1.3 on port 8443, and verify it from the separate client VM — establishing the known-good baseline and the real client/server network path."
+    - title: "Upgrade to Post-Quantum TLS"
+      overview: "Learners confirm the RHEL 10 DEFAULT crypto policy, add the single Nginx directive `ssl_ecdh_curve mlkem768_x25519` to enable hybrid PQC key exchange, and use `openssl s_client` from the client VM to prove the handshake negotiates the post-quantum group."
+    - title: "Troubleshoot PQC Breaking Points & Fallback"
+      overview: "The largest module: learners reproduce MTU fragmentation of the larger PQC handshake and fix it with PMTUD/MSS clamping, then reproduce a legacy X25519-only client failure and fix it with a hybrid fallback list (`mlkem768_x25519:X25519:prime256v1`) that preserves backward compatibility."
     rcars_overlap_pct: 37
     rcars_top_matches:
     - title: "Configuring the system-wide cryptographic policy"
