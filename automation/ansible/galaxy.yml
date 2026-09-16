@@ -1,0 +1,10 @@
+---
+namespace: "zt_security_pqc_tls"
+name: "automation"
+version: "1.0.0"
+readme: README.md
+authors:
+  - "jscar-hawk <jloscar@redhat.com>"
+description: "Starter collection for this project's custom Ansible automation."
+license: []
+repository: "https://github.com/rhpds/zt-security-pqc-tls"
